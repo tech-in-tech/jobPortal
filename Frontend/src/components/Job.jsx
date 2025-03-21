@@ -6,7 +6,7 @@ import { Badge } from './ui/badge';
 
 const Job = () => {
   return (
-    <div className="p-12 rounded-lg shadow-2xl bg-white border border-gray-200 hover:shadow-3xl transition duration-300">
+    <div className="p-12 rounded-lg shadow-2xl bg-white border border-gray-200 space-x-3 hover:shadow-3xl transition duration-300">
       {/* Top Section */}
       <div className="flex items-center justify-between text-gray-500 text-sm">
         <p>📅 2 days ago</p>
@@ -18,7 +18,7 @@ const Job = () => {
       {/* Company Info */}
       <div className="flex items-center gap-3 my-3">
         <Avatar className="w-12 h-12 border border-gray-300">
-          <AvatarImage src="https://via.placeholder.com/50" alt="Company Logo" />
+           <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" />
         </Avatar>
         <div>
           <h1 className="font-semibold text-lg text-gray-800">Company Name</h1>

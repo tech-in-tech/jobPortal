@@ -10,9 +10,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
-  const user = false;
+  // const user = false;
+  const {user} = useSelector(store=>store.auth);
   return (
     // Navbar
     <div className='bg-white'>
@@ -66,7 +68,8 @@ const Navbar = () => {
                     <div className='my-2 flex flex-col text-gray-600'>
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <User2 />
-                        <Button variant="link">View Profile</Button>
+                        <Button variant="link"><Link to="/profile">
+                        View Profile</Link></Button>
                       </div>
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <LogOutIcon />

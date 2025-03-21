@@ -15,7 +15,6 @@ const Jobs = () => {
           <div className='w-[20%]'>
             <FilterCard />
           </div>
-
           {jobsArray.length <= 0 ? (
             <span>Jobs Not Found</span>
           ) : (
