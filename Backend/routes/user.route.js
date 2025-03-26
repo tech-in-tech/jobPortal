@@ -9,7 +9,7 @@ const router = Router();
 router.post("/register",singleUpload,register)
 router.post("/login",login)
 router.get("/logout",logout)
-router.post("/profile/update",isAuthenticated,updateProfile)
+router.post("/profile/update",isAuthenticated,singleUpload,updateProfile)
 
 
 

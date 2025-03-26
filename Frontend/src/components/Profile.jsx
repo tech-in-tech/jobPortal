@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './shared/Navbar';
 import { Avatar, AvatarImage } from './ui/avatar';
 import { Contact, Mail, Pen } from 'lucide-react';
@@ -6,8 +6,13 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Label } from './ui/label';
 import AppliedJobTable from './AppliedJobTable';
-const skills = ["HTML", "CSS", "JavaScript", "React", "Node"];
+import UpdateProfileDialog from './UpdateProfileDialog';
+import { useSelector } from 'react-redux';
+import store from '@/redux/store';
+// const skills = ["HTML", "CSS", "JavaScript", "React", "Node"];
 const Profile = () => {
+  const {user} = useSelector(store=>store.auth);
+  const [open, setOpen] = useState(false);
   const isResume = true;
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -23,31 +28,31 @@ const Profile = () => {
               />
             </Avatar>
             <div>
-              <h1 className="font-semibold text-xl text-gray-800">Full Name</h1>
-              <p className="text-gray-600 text-sm">Software Developer | MERN Stack</p>
+              <h1 className="font-semibold text-xl text-gray-800">{user?.fullname}</h1>
+              <p className="text-gray-600 text-sm">{user?.profile?.bio}</p>
             </div>
           </div>
-          <Button className="p-2" variant="outline"><Pen className="w-5 h-5" /></Button>
+          <Button onClick={()=>setOpen(true)} className="p-2" variant="outline"><Pen className="w-5 h-5" /></Button>
         </div>
 
         {/* Contact Details */}
         <div className="flex flex-col gap-3 mb-5 text-gray-700">
           <div className="flex items-center gap-3">
             <Mail className="text-gray-500" />
-            <span className="text-sm">anu@gmail.com</span>
+            <span className="text-sm">{user?.email}</span>
           </div>
           <div className="flex items-center gap-3">
             <Contact className="text-gray-500" />
-            <span className="text-sm">73467864</span>
+            <span className="text-sm">{user?.phoneNumber}</span>
           </div>
         </div>
 
         {/* Skills Section */}
         <div>
           <h1 className="text-lg font-semibold text-gray-800 mb-2">Skills</h1>
-          {skills.length !== 0 ? (
+          {user?.profile?.skills.length !== 0 ? (
             <div className="flex flex-wrap gap-2">
-              {skills.map((item, index) => (
+              {user?.profile?.skills.map((item, index) => (
                 <Badge key={index} className="px-3 py-1 text-sm font-medium bg-blue-100 text-blue-700">
                   {item}
                 </Badge>
@@ -61,12 +66,12 @@ const Profile = () => {
           <Label className="text-md font-bold">Resume</Label>
           {isResume ? (
             <a
-              href="https://x.com/Anubhav6122004"
-              target="_blank"
+            target="_blank"
+              href={user?.profile?.resume}
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline"
             >
-              View Resume
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span className="text-gray-500">NA</span>
@@ -77,6 +82,7 @@ const Profile = () => {
         <h1 className='font-bold text-lg'>Applied Jobs</h1>
         <AppliedJobTable />
       </div>
+      <UpdateProfileDialog open={open} setOpen={setOpen}/>
     </div>
   );
 };

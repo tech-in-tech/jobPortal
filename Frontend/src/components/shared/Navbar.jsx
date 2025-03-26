@@ -1,8 +1,9 @@
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User2 } from 'lucide-react'
+import axios from 'axios'
 import { LogOutIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Jobs from '../Jobs'
 import { Button } from "@/components/ui/button"
 import {
@@ -10,11 +11,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'sonner'
+import { USER_API_END_POINT } from '@/utils/constant'
+import { setUser } from '@/redux/authSlice'
+// import store from '@/redux/store'
 
 const Navbar = () => {
   // const user = false;
   const {user} = useSelector(store=>store.auth);
+  const dispatch= useDispatch();
+  const navigate = useNavigate();
+  const logoutHandler= async()=>{
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`,{ withCredentials: true });
+      if(res.data.success){
+        dispatch(setUser(null));  // Ensure this runs after API call
+      navigate("/");
+      toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Logout failed. Please try again.");
+    }
+  }
   return (
     // Navbar
     <div className='bg-white'>
@@ -50,18 +70,18 @@ const Navbar = () => {
               <Popover>
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage src={user?.profile?.profilePhoto} />
                   </Avatar>
                 </PopoverTrigger>
                 <PopoverContent className="w-80">
                   <div className=''>
                     <div className='flex space-y-2 gap-2'>
                       <Avatar className="cursor-pointer">
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage src={user?.profile?.profilePhoto} />
                       </Avatar>
                       <div>
-                        <h4 className='font-medium'>Anubhav Sharma</h4>
-                        <p className='text-sm text-muted-foreground'>Lorem ipsum dolor sit amet</p>
+                        <h4 className='font-medium'>{user?.fullname}</h4>
+                        <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>
                       </div>
                     </div>
 
@@ -73,7 +93,8 @@ const Navbar = () => {
                       </div>
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <LogOutIcon />
-                        <Button variant="link">Logout</Button>
+                        <Button variant="link"
+                        onClick = {logoutHandler}>Logout</Button>
                       </div>
                     </div>
                   </div>
@@ -83,7 +104,6 @@ const Navbar = () => {
           }
         </div>
       </div>
-
     </div>
   )
 }

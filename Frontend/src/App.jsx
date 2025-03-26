@@ -7,6 +7,7 @@ import Navbar from './components/shared/Navbar'
 import Jobs from "./components/Jobs"
 import Profile from "./components/profile"
 import Browse from "./components/Browse"
+import JobDescription from "./components/JobDescription"
 
 const appRouter = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const appRouter = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />
+  },
+  {
+    path: '/description/:id',
+    element: <JobDescription />
   }
 
 ])
