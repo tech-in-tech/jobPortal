@@ -19,16 +19,16 @@ import { setUser } from '@/redux/authSlice'
 
 const Navbar = () => {
   // const user = false;
-  const {user} = useSelector(store=>store.auth);
-  const dispatch= useDispatch();
+  const { user } = useSelector(store => store.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logoutHandler= async()=>{
+  const logoutHandler = async () => {
     try {
-      const res = await axios.get(`${USER_API_END_POINT}/logout`,{ withCredentials: true });
-      if(res.data.success){
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+      if (res.data.success) {
         dispatch(setUser(null));  // Ensure this runs after API call
-      navigate("/");
-      toast.success(res.data.message);
+        navigate("/");
+        toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -49,9 +49,21 @@ const Navbar = () => {
         {/* right */}
         <div className='flex gap-12 justify-center'>
           <ul className='flex font-medium items-center gap-5'>
-            <li> <Link to="/">Home</Link> </li>
-            <li> <Link to="/Jobs">Jobs</Link></li>
-            <li> <Link to='/Browse'>Browse</Link> </li>
+            {
+              user && user.role === 'recruiter' ? (
+                <>
+                  <li> <Link to="/admin/company">Companies</Link> </li>
+                  <li> <Link to="/admin/jobs">Jobs</Link></li>
+                </>
+              ) : (
+                <>
+                  <li> <Link to="/">Home</Link> </li>
+                  <li> <Link to="/Jobs">Jobs</Link></li>
+                  <li> <Link to='/Browse'>Browse</Link> </li>
+                </>
+              )
+            }
+
           </ul>
 
           {
@@ -86,15 +98,24 @@ const Navbar = () => {
                     </div>
 
                     <div className='my-2 flex flex-col text-gray-600'>
-                      <div className='flex w-fit items-center gap-2 cursor-pointer'>
-                        <User2 />
-                        <Button variant="link"><Link to="/profile">
-                        View Profile</Link></Button>
-                      </div>
+
+                    {
+  user && user.role === 'student' && (
+    <div className='flex w-fit items-center gap-2 cursor-pointer'>
+      <User2 />
+      <Button variant="link">
+        <Link to="/profile">View Profile</Link>
+      </Button>
+    </div>
+  )
+}
+
+
+                      
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <LogOutIcon />
                         <Button variant="link"
-                        onClick = {logoutHandler}>Logout</Button>
+                          onClick={logoutHandler}>Logout</Button>
                       </div>
                     </div>
                   </div>

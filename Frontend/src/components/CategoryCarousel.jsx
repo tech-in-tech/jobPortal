@@ -13,14 +13,15 @@ const category = [
   "Game Developer",
   "Ethical Hacker"
 ];
+
 const CategoryCarousel = () => {
   return (
     <div>
       <Carousel className="w-full max-w-xl mx-auto my-20">
         <CarouselContent>
           {category.map((cat, index) => (
-            <CarouselItem className=" lg:basis-1/3 md:basis-1/3 sm:basis-1/3 basis-1/2">
-              <Button  variant="outline" className="rounded-full">{cat}</Button>
+            <CarouselItem key={index} className="lg:basis-1/3 md:basis-1/3 sm:basis-1/3 basis-1/2">
+              <Button variant="outline" className="rounded-full">{cat}</Button>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -30,4 +31,5 @@ const CategoryCarousel = () => {
     </div>
   );
 };
+
 export default CategoryCarousel;
