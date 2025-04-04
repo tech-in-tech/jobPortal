@@ -52,7 +52,7 @@ const Navbar = () => {
             {
               user && user.role === 'recruiter' ? (
                 <>
-                  <li> <Link to="/admin/company">Companies</Link> </li>
+                  <li> <Link to="/admin/companies">Companies</Link> </li>
                   <li> <Link to="/admin/jobs">Jobs</Link></li>
                 </>
               ) : (
@@ -99,19 +99,19 @@ const Navbar = () => {
 
                     <div className='my-2 flex flex-col text-gray-600'>
 
-                    {
-  user && user.role === 'student' && (
-    <div className='flex w-fit items-center gap-2 cursor-pointer'>
-      <User2 />
-      <Button variant="link">
-        <Link to="/profile">View Profile</Link>
-      </Button>
-    </div>
-  )
-}
+                      {
+                        user && user.role === 'student' && (
+                          <div className='flex w-fit items-center gap-2 cursor-pointer'>
+                            <User2 />
+                            <Button variant="link">
+                              <Link to="/profile">View Profile</Link>
+                            </Button>
+                          </div>
+                        )
+                      }
 
 
-                      
+
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <LogOutIcon />
                         <Button variant="link"
