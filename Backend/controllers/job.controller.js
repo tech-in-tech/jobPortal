@@ -1,12 +1,11 @@
 import { Job } from "../models/job.model.js";
-import { User } from "../models/user.model.js";
 
 // post jobs for admin
 export const postJob = async (req, res) => {
   try {
+    const { title, description, requirements, salary, location, jobType, position, experience, companyId } = req.body;
     const userId = req.id;
-    const { title, description, requirements, salary, location, jobType, position, experienceLevel, company } = req.body;
-    if (!title || !description || !requirements || !salary || !location || !jobType || !position || !experienceLevel || !company) {
+    if (!title || !description || !requirements || !salary || !location || !jobType || !position || !experience || !companyId) {
       return res.status(400).json({
         message: "Something is missing",
         success: false
@@ -17,12 +16,12 @@ export const postJob = async (req, res) => {
       title,
       description,
       requirements: requirements.split(","),
-      salary,
-      experienceLevel,
+      salary:Number(salary),
+      experienceLevel:experience,
       location,
       jobType,
       position,
-      company,
+      company:companyId,
       created_by: userId
     })
     return res.status(201).json({

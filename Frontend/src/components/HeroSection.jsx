@@ -1,6 +1,17 @@
-import React from 'react'
+import { setSearchQuery } from '@/redux/jobSlice';
+import React, { useState } from 'react'
 import { FaSearch } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 const HeroSection = () => {
+  const dispatch = useDispatch();
+  const [query,setQuery] = useState("");
+  const navigate = useNavigate();
+  
+  const searchJobHandle = ()=>{
+    dispatch(setSearchQuery(query));
+    navigate("/browse")
+  }
   return (
     <div className='text-center'>
       <div className='flex flex-col gap-5 m-10'>
@@ -13,10 +24,11 @@ const HeroSection = () => {
         <div className="flex items-center bg-white rounded-full shadow-md p-2 w-full max-w-lg">
           <input
             type="text"
+            onChange={(e)=>setQuery(e.target.value)}
             placeholder="Find your dream jobs"
             className="w-full outline-none px-4 py-2 text-gray-700"
           />
-          <button className="bg-[#f83002] p-3 rounded-full text-white">
+          <button onClick={searchJobHandle} className="bg-[#f83002] p-3 rounded-full text-white">
             <FaSearch size={25} />
           </button>
         </div>

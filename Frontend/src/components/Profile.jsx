@@ -8,12 +8,14 @@ import { Label } from './ui/label';
 import AppliedJobTable from './AppliedJobTable';
 import UpdateProfileDialog from './UpdateProfileDialog';
 import { useSelector } from 'react-redux';
-import store from '@/redux/store';
+import useGetAppliedJobs from '@/hooks/useGetAppliedJobs';
 // const skills = ["HTML", "CSS", "JavaScript", "React", "Node"];
 const Profile = () => {
+  useGetAppliedJobs();
   const {user} = useSelector(store=>store.auth);
   const [open, setOpen] = useState(false);
   const isResume = true;
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
