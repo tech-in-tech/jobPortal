@@ -24,6 +24,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^12.6.3",
+    "install": "^0.13.0",
     "lucide-react": "^0.481.0",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
