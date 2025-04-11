@@ -5,7 +5,7 @@ import Signup from './components/auth/Signup'
 import Home from './components/Home'
 import Navbar from './components/shared/Navbar'
 import Jobs from "./components/Jobs"
-import Profile from "./components/profile"
+import Profile from "./components/Profile"
 import Browse from "./components/Browse"
 import JobDescription from "./components/JobDescription"
 import Companies from "./components/admin/Companies"
